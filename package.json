@@ -1,0 +1,17 @@
+{
+  "name": "espro",
+  "version": "1.0.0",
+  "description": "A full-stack web application",
+  "scripts": {
+    "client-install": "cd client && npm install",
+    "server-install": "cd server && npm install",
+    "install-all": "npm install && npm run client-install && npm run server-install",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "@mui/icons-material": "^6.4.8",
+    "concurrently": "^8.2.0"
+  }
+}
