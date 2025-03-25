@@ -1,40 +1,23 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
-  AppBar,
   Toolbar,
   Typography,
   Button,
   Box,
-  Container,
-  styled
+  Container
 } from '@mui/material';
 import { useAuth } from '../contexts/AuthContext';
-
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: 'rgba(51, 51, 51, 0.95)',
-  boxShadow: 'none',
-}));
-
-const Logo = styled('img')({
-  height: '40px',
-  marginRight: '16px',
-});
+import { GlassNavbar, Logo } from './styles';
 
 const NavButton = styled(Button)(({ theme }) => ({
   color: '#fff',
   fontWeight: 500,
+  textTransform: 'none',
+  letterSpacing: '1px',
+  padding: theme.spacing(1, 2),
   '&:hover': {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-  },
-}));
-
-const JoinNowButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#F15A29',
-  color: '#fff',
-  padding: '8px 24px',
-  '&:hover': {
-    backgroundColor: '#d94d1f',
   },
 }));
 
@@ -49,7 +32,7 @@ const Navbar = () => {
   };
 
   return (
-    <StyledAppBar position="fixed">
+    <GlassNavbar position="fixed">
       <Container>
         <Toolbar disableGutters>
           <RouterLink to="/">
@@ -85,7 +68,7 @@ const Navbar = () => {
           </Box>
         </Toolbar>
       </Container>
-    </StyledAppBar>
+    </GlassNavbar>
   );
 };
 

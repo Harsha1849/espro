@@ -1,11 +1,18 @@
-import React from 'react';
-import { Box, Container, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React, { useEffect } from 'react';
+import { Box, Container, Typography, IconButton } from '@mui/material';
+import { styled, keyframes } from '@mui/material/styles';
+import { motion } from 'framer-motion';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import VideoBackground from './VideoBackground';
+import Typewriter from 'typewriter-effect';
+
+const bounce = keyframes`
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-20px); }
+  60% { transform: translateY(-10px); }
+`;
 
 const HeroWrapper = styled(Box)(({ theme }) => ({
-  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2073&q=80")',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
   minHeight: '100vh',
   width: '100%',
   margin: 0,
@@ -14,61 +21,80 @@ const HeroWrapper = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   color: 'white',
   position: 'relative',
-  textAlign: 'center'
+  textAlign: 'center',
+  overflow: 'hidden'
+}));
+
+const ScrollIndicator = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  bottom: theme.spacing(4),
+  left: '50%',
+  transform: 'translateX(-50%)',
+  color: 'white',
+  animation: `${bounce} 2s infinite`,
+  '&:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)'
+  }
 }));
 
 const HeroSection = () => {
+  const scrollToContent = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <HeroWrapper>
+      <VideoBackground />
       <Container maxWidth="lg">
-        <Box 
-          sx={{ 
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            opacity: 1
-          }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
         >
-          <Typography
-            variant="h1"
+          <Box
             sx={{
-              fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
-              fontWeight: 400,
-              mb: 2,
-              textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-              letterSpacing: '-0.02em'
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              opacity: 1
             }}
           >
-            Sri Basaveshwara Real Estate
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              mb: 4,
-              textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-              fontWeight: 400,
-              maxWidth: '800px',
-              mx: 'auto'
-            }}
-          >
-            Trusted since 1998
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              mb: 4,
-              textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-              fontWeight: 800,
-              maxWidth: '600px',
-              mx: 'auto'
-            }}
-          >
-        
-          </Typography>
-        </Box>
+            <Typography
+              variant="h1"
+              component={motion.h1}
+              sx={{
+                fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
+                fontWeight: 600,
+                mb: 2,
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                letterSpacing: '-0.02em',
+                fontFamily: '"Playfair Display", serif'
+              }}
+            >
+              Sri Basaveshwara Real Estate
+            </Typography>
+            <Box sx={{ mb: 4, height: '3rem' }}>
+              <Typewriter
+                options={{
+                  strings: ['Luxury Living', 'Premium Properties', 'Trusted since 1998'],
+                  autoStart: true,
+                  loop: true,
+                  wrapperClassName: 'typewriter-text',
+                  cursorClassName: 'typewriter-cursor'
+                }}
+              />
+            </Box>
+          </Box>
+        </motion.div>
       </Container>
+      <ScrollIndicator onClick={scrollToContent}>
+        <KeyboardArrowDownIcon fontSize="large" />
+      </ScrollIndicator>
     </HeroWrapper>
   );
 };
